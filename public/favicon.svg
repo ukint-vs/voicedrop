@@ -1,0 +1,7 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="VoiceDrop — drop with waveform pulse">
+  <path d="M 50 14 C 65 30, 80 50, 80 65 A 30 30 0 1 1 20 65 C 20 50, 35 30, 50 14 Z"
+        fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+  <path d="M 26 62 Q 32 55, 38 62 T 50 62 T 62 62 T 74 62"
+        fill="none" stroke="#E63946" stroke-width="1.8"
+        stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

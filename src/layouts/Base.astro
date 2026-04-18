@@ -1,0 +1,56 @@
+---
+import "../styles/global.css";
+import Logomark from "../components/Logomark.astro";
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/+$/, "");
+const url = (path: string) => `${base}/${path.replace(/^\/+/, "")}`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" href={url("favicon.svg")} type="image/svg+xml" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@400;500;600&family=Geist+Mono&display=swap"
+    />
+  </head>
+  <body>
+    <main>
+      <slot />
+
+      <footer>
+        <div class="links">
+          <a href={url("/")}>Home</a>
+          <a href={url("privacy/")}>Privacy</a>
+          <a href={url("support/")}>Support</a>
+          <a href="mailto:ukint-vs@proton.me">Contact</a>
+        </div>
+        <p class="colophon">
+          <Logomark size={18} muted label="" />
+          <span>
+            © 2026 VoiceDrop. Made by
+            <a href="https://ukint-vs.github.io/">ukint-vs</a>.
+          </span>
+        </p>
+      </footer>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,132 @@
+---
+import Base from "../../layouts/Base.astro";
+import Wordmark from "../../components/Wordmark.astro";
+---
+
+<Base
+  title="Privacy Policy — VoiceDrop"
+  description="VoiceDrop privacy policy. On-device transcription. No audio or transcripts leave your iPhone."
+>
+  <Wordmark withMark />
+
+  <h1>Privacy Policy</h1>
+  <p class="updated">Last updated: 2026-04-18</p>
+
+  <p class="lede">
+    VoiceDrop records audio and transcribes it on your device using Apple's
+    Neural Engine via the open-source
+    <a href="https://github.com/FluidInference/FluidAudio">FluidAudio</a>
+    library (Parakeet TDT v3 model from NVIDIA, CC-BY-4.0 license).
+    <strong
+      >Audio data and transcripts are never transmitted to us or to any third
+      party.</strong
+    >
+  </p>
+
+  <h2>What we store locally</h2>
+  <ul>
+    <li>
+      <strong>Transcripts you create</strong>, saved to your device's Documents
+      directory. Delete them anytime from the History tab or by deleting the app.
+    </li>
+    <li>
+      <strong>The speech model file</strong>, cached after a one-time download
+      from Hugging Face's public model hub on first use (~600 MB).
+    </li>
+    <li>
+      <strong>Your app settings</strong> (silence detection, auto-copy, language
+      mode), stored in <span class="kbd">UserDefaults</span> on your device.
+    </li>
+  </ul>
+
+  <h2>Shared App Group storage</h2>
+  <p>
+    VoiceDrop's keyboard extension and main app share a small
+    <span class="kbd">UserDefaults</span> store (identifier
+    <span class="kbd">group.com.ukintvs.voicedrop</span>) to hand off transcribed
+    text between processes. Entries have a short time-to-live:
+  </p>
+  <ul>
+    <li>
+      <strong>Keyboard insertion text</strong>: 2 minutes, single-consume
+      (cleared the moment the keyboard reads it to insert at your cursor).
+    </li>
+    <li>
+      <strong>Deferred pasteboard text</strong>: 10 minutes, cleared after the
+      main app writes it to the system pasteboard.
+    </li>
+  </ul>
+  <p>Both stores are cleared when you uninstall the app.</p>
+
+  <h2>Network activity</h2>
+  <p>
+    The <strong>only</strong> network request VoiceDrop makes is a one-time
+    download of the speech model from
+    <span class="kbd">huggingface.co</span> during onboarding or first use. After
+    the model is cached, VoiceDrop runs entirely offline.
+  </p>
+  <p>
+    The FluidAudio library also fetches a small Silero VAD model (silence
+    detection) from the same source on first use. Same offline-after-cache
+    behavior.
+  </p>
+
+  <h2>No tracking, no analytics, no third-party SDKs collecting data</h2>
+  <p>
+    VoiceDrop does not integrate any analytics SDK (Firebase, Segment,
+    Amplitude, etc.) and does not send usage data to any server. Apple's
+    TestFlight and App Store Connect aggregate crash and performance reports via
+    <span class="kbd">MetricKit</span>, delivered to the developer as part of
+    the normal iOS app lifecycle; these reports are subject to Apple's privacy
+    policy. You can opt out of sharing these reports in
+    <strong>Settings → Privacy &amp; Security → Analytics &amp; Improvements</strong
+    >
+    on your iPhone.
+  </p>
+
+  <h2>Data deletion</h2>
+  <p>
+    Delete the VoiceDrop app to remove all locally stored data. Transcripts, the
+    model cache, settings, and App Group storage are all cleared on uninstall.
+  </p>
+
+  <h2>Third-party components</h2>
+  <ul>
+    <li>
+      <a href="https://github.com/FluidInference/FluidAudio">FluidAudio</a>
+       (MIT) — open-source speech recognition, runs on-device.
+    </li>
+    <li>OnboardingKit (MIT) — SwiftUI onboarding UI, no data collection.</li>
+    <li>Pow (MIT) — SwiftUI animation effects, no data collection.</li>
+    <li>
+      Parakeet TDT v3 (CC-BY-4.0) — NVIDIA speech model, runs on-device.
+    </li>
+    <li>Silero VAD (MIT) — silence detection model, runs on-device.</li>
+  </ul>
+
+  <h2>Contact</h2>
+  <p>
+    Questions about this policy or VoiceDrop's data practices? Email
+    <a
+      href="mailto:ukint-vs@proton.me?subject=VoiceDrop%20privacy%20question"
+      >ukint-vs@proton.me</a
+    >.
+  </p>
+</Base>
+
+<style>
+  .updated {
+    color: var(--ink-muted);
+    font-size: 14px;
+    margin: 0 0 var(--space-2xl);
+  }
+
+  ul {
+    padding-left: var(--space-lg);
+    margin: 0 0 var(--space-md);
+  }
+
+  li {
+    margin-bottom: 6px;
+  }
+</style>

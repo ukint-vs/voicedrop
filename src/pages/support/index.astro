@@ -1,0 +1,184 @@
+---
+import Base from "../../layouts/Base.astro";
+import Wordmark from "../../components/Wordmark.astro";
+
+const base = import.meta.env.BASE_URL.replace(/\/+$/, "");
+const url = (path: string) => `${base}/${path.replace(/^\/+/, "")}`;
+---
+
+<Base
+  title="Support — VoiceDrop"
+  description="VoiceDrop support, setup guide, and FAQ. Contact ukint-vs@proton.me."
+>
+  <Wordmark withMark />
+
+  <h1>Support</h1>
+  <p>Setup guide, common questions, and how to reach the developer.</p>
+
+  <div class="contact-card">
+    <strong>Contact</strong>
+    <p>
+      Email
+      <a href="mailto:ukint-vs@proton.me?subject=VoiceDrop%20support"
+        >ukint-vs@proton.me</a
+      >. Replies usually within a day or two.
+    </p>
+  </div>
+
+  <h2>Setting up the keyboard</h2>
+  <p>
+    VoiceDrop ships with a keyboard extension that lets you dictate
+    voice-to-text from inside any messaging app. Setup is a one-time thing:
+  </p>
+  <ul>
+    <li>
+      iOS
+      <strong
+        >Settings → General → Keyboard → Keyboards → Add New Keyboard</strong
+      >
+       → select VoiceDrop.
+    </li>
+    <li>
+      Tap the newly-added VoiceDrop row → toggle
+      <strong>Allow Full Access</strong> on.
+    </li>
+    <li>
+      In any app that accepts text, tap the globe key (<span class="kbd"
+        >🌐</span
+      >) on the keyboard → switch to VoiceDrop.
+    </li>
+    <li>
+      Tap the big red mic button. VoiceDrop opens, you dictate, silence
+      auto-stops the recording.
+    </li>
+    <li>
+      Read the transcript. When satisfied, tap the
+      <strong>‹ [App Name]</strong> breadcrumb in the iOS top-left corner.
+      You're back in your messaging app with the transcript inserted at your
+      cursor.
+    </li>
+  </ul>
+
+  <h2>Frequently asked</h2>
+
+  <h3>Why does the keyboard need Full Access?</h3>
+  <p>
+    The keyboard needs to read the transcribed text from a shared App Group
+    storage slot — that's the only reason. It does not transmit keystrokes,
+    record audio, make network requests, or include any analytics. Audio
+    recording and transcription happen exclusively in the main VoiceDrop app.
+    The keyboard is a thin text-insertion client. See the
+    <a href={url("privacy/")}>privacy policy</a> for the full breakdown.
+  </p>
+
+  <h3>Does my voice leave the device?</h3>
+  <p>
+    No. Transcription runs on Apple's Neural Engine using the Parakeet model,
+    which was downloaded once to your device during onboarding. After that,
+    VoiceDrop makes no network requests at all. No audio is uploaded. No
+    transcripts are uploaded. No usage analytics are collected.
+  </p>
+
+  <h3>Why is the first recording so slow?</h3>
+  <p>
+    The Parakeet model (~600 MB) downloads from Hugging Face the first time you
+    open the app. The <strong>very first launch</strong> also compiles the model
+    for the Neural Engine, which takes about 15–20 seconds. Subsequent cold
+    launches load from the compiled cache in under a second. While Parakeet is
+    loading (or downloading), VoiceDrop falls back to Apple Speech — lower
+    quality but instant. Once Parakeet is warm, it's ~70× realtime — a
+    one-second clip transcribes in under 15 ms.
+  </p>
+
+  <h3>How do I disable auto-stop on silence?</h3>
+  <p>
+    VoiceDrop → <strong>Settings tab → Silence detection</strong>. Toggle off.
+    In-app recordings then require you to tap the mic button to stop. (Action
+    Button and keyboard flows still auto-stop — they run without a visible stop
+    button, so silence is how they know you're done.)
+  </p>
+
+  <h3>How do I uninstall everything?</h3>
+  <p>
+    Delete the app like any other iOS app. All transcripts, model cache,
+    settings, and shared storage are cleared on uninstall. Nothing of yours
+    remains on any server (because nothing was ever there).
+  </p>
+
+  <h3>Which languages work?</h3>
+  <p>
+    VoiceDrop ships with two on-device speech engines. Parakeet TDT v3 is the
+    default and covers 25 European languages with the lowest word-error rate.
+    Qwen3-ASR is the alternative engine and adds 14 more including Arabic,
+    Chinese (Mandarin and Cantonese), Japanese, Korean, Hindi, Persian, Thai,
+    Vietnamese, and Indonesian. Combined, <strong>39 languages</strong> are
+    available.
+  </p>
+  <p>
+    The full list: Arabic, Bulgarian, Cantonese, Chinese, Croatian, Czech,
+    Danish, Dutch, English, Estonian, Filipino, Finnish, French, German, Greek,
+    Hindi, Hungarian, Indonesian, Italian, Japanese, Korean, Latvian,
+    Lithuanian, Macedonian, Malay, Norwegian, Persian, Polish, Portuguese,
+    Romanian, Russian, Slovak, Slovenian, Spanish, Swedish, Thai, Turkish,
+    Ukrainian, Vietnamese.
+  </p>
+  <p>
+    In <strong>Auto</strong> mode the active engine detects the language
+    per-recording. You can also pin a specific language in
+    <strong>Settings → Language</strong>; languages not supported by the active
+    engine fall back to auto-detect.
+  </p>
+
+  <h3>The transcript is wrong. What can I do?</h3>
+  <p>
+    During the keyboard flow, tap the
+    <strong>Try again</strong> button on the done state. That discards the
+    current transcript and starts a fresh recording, without returning to your
+    messaging app. If a specific word is consistently wrong (your name, a place,
+    technical jargon), email the developer — custom vocabulary is planned for a
+    future Pro tier.
+  </p>
+
+  <h2>Reporting a bug</h2>
+  <p>Any of these are worth a quick email:</p>
+  <ul>
+    <li>Crashes or freezes</li>
+    <li>Transcription that's consistently wrong for a specific phrase</li>
+    <li>Keyboard doesn't insert text after you return to the host app</li>
+    <li>UI that's confusing or requires guessing</li>
+    <li>Battery drain during long recordings</li>
+  </ul>
+  <p>
+    If you reach the app's Settings tab, tap
+    <strong>Send feedback</strong> and it'll pre-fill your build number, device
+    model, and language mode so replies don't need back-and-forth. Nothing about
+    what you dictated is ever included.
+  </p>
+</Base>
+
+<style>
+  ul {
+    padding-left: var(--space-lg);
+    margin: 0 0 var(--space-md);
+  }
+
+  li {
+    margin-bottom: 6px;
+  }
+
+  .contact-card {
+    margin: var(--space-2xl) 0;
+    padding: 20px var(--space-lg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+  }
+
+  .contact-card p {
+    margin-bottom: 0;
+  }
+
+  .contact-card strong {
+    display: block;
+    margin-bottom: 4px;
+  }
+</style>
